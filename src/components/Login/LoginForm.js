@@ -2,15 +2,29 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PATHS } from '../../constants'
 
-const LoginForm = () => {
-    const [] = useState({
+const LoginForm = ({onHandleLogin}) => {
+    const [user, setUser] = useState({
         email: "",
         password: ""
     })
+    const onHandleChange = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        })
+    }
+    const onHandleSubmit = (e) => {
+        e.preventDefault()
+        onHandleLogin(user)
+    }
+    const { email, password } = user;
     return (
-        <form action="#">
+        <form onSubmit={ onHandleSubmit }>
             <input
                 type="text"
+                name="email"
+                value={email}
+                onChange={onHandleChange}
                 className="form-control"
                 placeholder="Email"
                 required
@@ -18,6 +32,9 @@ const LoginForm = () => {
             <div className="ass1-input-copy">
                 <input
                 type="password"
+                name="password"
+                value={password}
+                onChange={onHandleChange}
                 className="form-control"
                 placeholder="Password"
                 required

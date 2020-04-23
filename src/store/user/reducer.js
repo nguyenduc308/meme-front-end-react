@@ -1,8 +1,14 @@
-const initialState = {
+import { SET_USER } from "./actions";
 
+const initialState = {
+    currentUser: null,
 }
 
 export default (state = initialState, action) => {
-
-    return state;
+    switch (action.type) {
+        case SET_USER:
+            return {...state, currentUser: action.payload}
+        default:
+            return state;
+    }
 }
