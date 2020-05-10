@@ -3,11 +3,15 @@ import { useHistory } from 'react-router-dom'
 
 import { useDispatch } from 'react-redux';
 import { LoginHeader, LoginForm } from "../../components/Login";
+import { useNotAuth } from '../../helpers'
 
 import { showLoading, hideLoading } from '../../store/app/actions'
 import { login } from '../../store/auth/actions';
 
+import { PATHS } from "../../constants";
+
 const Login = () => {
+    useNotAuth();
     const dispatch = useDispatch();
     const history = useHistory();
     const onHandleLogin = user => {
@@ -15,7 +19,7 @@ const Login = () => {
         return dispatch(login(user))
                 .then(res => {
                     dispatch(hideLoading());
-                    history.push('/');
+                    history.push(PATHS.HOMEPAGE);
                 })
                 .catch(err => {
                     dispatch(hideLoading());

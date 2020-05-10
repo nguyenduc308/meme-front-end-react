@@ -1,6 +1,8 @@
 import { LOGIN_SUCCESS, LOGIN_FAIL } from './actions'
+import { storage } from '../../helpers';
+
 const initialState = {
-    token: null,
+    token: storage.getToken() || null,
     error: null,
 }
 
