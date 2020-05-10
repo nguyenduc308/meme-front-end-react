@@ -1,13 +1,25 @@
 import React from "react";
+import { useHistory } from 'react-router-dom'
+
 import { useDispatch } from 'react-redux';
 import { LoginHeader, LoginForm } from "../../components/Login";
-import { api } from '../../services'
 
+import { showLoading, hideLoading } from '../../store/app/actions'
 import { login } from '../../store/auth/actions';
+
 const Login = () => {
-    const dispatch = useDispatch()
-    const onHandleLogin = (user) => {
-        login(user)
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const onHandleLogin = user => {
+        dispatch(showLoading());
+        return dispatch(login(user))
+                .then(res => {
+                    dispatch(hideLoading());
+                    history.push('/');
+                })
+                .catch(err => {
+                    dispatch(hideLoading());
+                })
     }
     return (
         <main>
